@@ -82,6 +82,7 @@ This command runs in the current Git repository, determines the latest tag, anal
 | `-skip-checks`      | Skips Git configuration and working directory status checks (use with caution). |
 | `-tag-format string` | Custom format for Git tags. Placeholders: `{{.Major}}`, `{{.Minor}}`, `{{.Patch}}`, `{{.Prerelease}}`. Example: `release-{{.Major}}.{{.Minor}}.{{.Patch}}`. |
 | `-set-version string`   | Manually specify a version (e.g., `1.2.3`). If provided, SemVerGo will not analyze commits. |
+|  -version  | Display the application's version. |
 
 ---
 
