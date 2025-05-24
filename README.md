@@ -1,4 +1,16 @@
 # SemVerGo
+<p align="center">
+  <img src="SemVerGo.png" alt="SemVerGo Logo" width="220"/>
+</p>
+
+
+<p align="center">
+  <em>A modern, open-source CLI tool for semantic versioning and changelog automation — powered by Go and the Conventional Commits specification.</em>
+</p>
+
+---
+
+**SemVerGo** is a powerful and flexible command-line tool written in Go that automates versioning and changelog generation for Git repositories following the [Conventional Commits](https://www.conventionalcommits.org/) standard.
 
 **SemVerGo** is a powerful and flexible open-source CLI tool written in Go. It automates semantic versioning and changelog generation for Git repositories that adhere to the [Conventional Commits](https://www.conventionalcommits.org/) standard.
 
