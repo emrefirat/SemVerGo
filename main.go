@@ -17,7 +17,7 @@ import (
 
 // appVersion holds the current version of the application.
 // This should be updated manually for each release or automated via build scripts.
-var appVersion = "v0.1.0-alpha.0" // Current pre-release version
+var appVersion = "v0.1.0-beta.0" // Current pre-release version
 
 // GitConfig represents required Git configuration
 var requiredGitConfigs = []string{
