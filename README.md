@@ -81,7 +81,7 @@ This command runs in the current Git repository, determines the latest tag, anal
 | `-push-branch`      | Pushes the local branch to the remote repository if it doesn't exist or is behind. |
 | `-skip-checks`      | Skips Git configuration and working directory status checks (use with caution). |
 | `-tag-format string` | Custom format for Git tags. Placeholders: `{{.Major}}`, `{{.Minor}}`, `{{.Patch}}`, `{{.Prerelease}}`. Example: `release-{{.Major}}.{{.Minor}}.{{.Patch}}`. |
-| `-version string`   | Manually specify a version (e.g., `1.2.3`). If provided, SemVerGo will not analyze commits. |
+| `-set-version string`   | Manually specify a version (e.g., `1.2.3`). If provided, SemVerGo will not analyze commits. |
 
 ---
 

@@ -15,6 +15,10 @@ import (
 	"github.com/Masterminds/semver/v3"
 )
 
+// appVersion holds the current version of the application.
+// This should be updated manually for each release or automated via build scripts.
+var appVersion = "v0.1.0-alpha.0" // Current pre-release version
+
 // GitConfig represents required Git configuration
 var requiredGitConfigs = []string{
 	"user.name",
@@ -102,19 +106,29 @@ func isGitRepository() bool {
 }
 
 func main() {
+	// Define flags
+	showAppVersion := flag.Bool("version", false, "Display the application's version.")
 	gitDir := flag.String("git-address", ".", "Path to git repository (default: current directory)")
 	branch := flag.String("branch", "", "Branch name (default: current branch)")
 	preRelease := flag.Bool("preRelease", false, "Enable pre-release versioning based on branch name")
 	ciMode := flag.Bool("ci", false, "Run in CI mode (auto-detect branch, auto-push tags)")
 	pushBranch := flag.Bool("push-branch", false, "Push the branch to remote if it doesn't exist or is behind")
-	versionFlag := flag.String("version", "", "Specify version directly (e.g., 1.2.3)")
+	setVersionFlag := flag.String("set-version", "", "Specify the exact version to be released (e.g., 1.2.3) to override automatic versioning.")
 	skipChecks := flag.Bool("skip-checks", false, "Skip git configuration and status checks (use with caution)")
 	nextVersionOnly := flag.Bool("next-version-only", false, "Only display the next version, do not create a tag")
 	tagFormat := flag.String("tag-format", "v{{.Major}}.{{.Minor}}.{{.Patch}}{{.Prerelease}}", "Custom format for the git tag. Placeholders: {{.Major}}, {{.Minor}}, {{.Patch}}, {{.Prerelease}} (includes leading hyphen if present, e.g., '-beta.1'). Example: 'v{{.Major}}.{{.Minor}}.{{.Patch}}{{.Prerelease}}' or 'release-{{.Major}}.{{.Minor}}.{{.Patch}}'")
 	debugMode := flag.Bool("debug", false, "Enable debug output for verbose logging")
 	outputChangelogEnabled := flag.Bool("output-changelog", false, "Enable generation of CHANGELOG.md file. Defaults to false.")
 	dryRun := flag.Bool("dry-run", false, "Perform a dry run, showing what would happen without making changes.")
+
+	// Parse flags
 	flag.Parse()
+
+	// Handle --version flag immediately if present
+	if *showAppVersion {
+		fmt.Println(appVersion)
+		os.Exit(0)
+	}
 
 	if *dryRun {
 		fmt.Println("Dry run mode enabled: No actual changes will be made to the Git repository or files.")
@@ -233,8 +247,8 @@ func main() {
 	// Re-fetch current version if needed, or use currentVersionForCommits
 	currentVersion = currentVersionForCommits // Use the version fetched earlier for consistency
 
-	if *versionFlag != "" {
-		versionStr := *versionFlag
+	if *setVersionFlag != "" { // Use the new setVersionFlag
+		versionStr := *setVersionFlag
 		if !strings.HasPrefix(versionStr, "v") {
 			versionStr = "v" + versionStr
 		}
@@ -386,12 +400,10 @@ func main() {
 			fmt.Printf("Successfully created and pushed version: %s\n", finalTagName)
 
 			// Push the branch if push-branch is enabled
-			if *pushBranch {
-				if err := pushCurrentBranch(); err != nil {
-					fmt.Printf("Warning: Could not push branch: %v\n", err)
-				} else {
-					fmt.Printf("Successfully pushed branch to remote.\n")
-				}
+			if err := pushCurrentBranch(); err != nil {
+				fmt.Printf("Warning: Could not push branch: %v\n", err)
+			} else {
+				fmt.Printf("Successfully pushed branch to remote.\n")
 			}
 		}
 	} else {
