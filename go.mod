@@ -1,4 +1,4 @@
-module git-versioner
+module github.com/emrefirat/SemVerGo
 
 go 1.22.2
 
